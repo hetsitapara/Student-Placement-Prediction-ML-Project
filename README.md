@@ -92,35 +92,3 @@ Deploy the interactive web app to test the model inputs in real-time:
 streamlit run app.py
 ```
 A browser tab will open automatically at `http://localhost:8501`.
-
----
-
-## 🎓 Campus Interview Cheat Sheet (Q&A Handbook)
-
-Be fully prepared to answer these questions during campus interviews:
-
-### Q1: What problem does your machine learning model solve?
-> **Answer**: It solves a binary classification problem: predicting whether a student will receive a placement offer (Placed: 1, Not Placed: 0) based on academic parameters (CGPA), cognitive skills (IQ), communication quality rating (1-5), and profile strength (completed projects and internships).
-
-### Q2: Why did you split the dataset into Training and Testing subsets?
-> **Answer**: If we evaluate a model on the same data it learned from, it can get perfect accuracy simply by memorizing individual records (overfitting) instead of learning actual patterns. Splitting the data (80% training, 20% testing) ensures that we evaluate the model on completely unseen records. This gives an honest estimate of how the model will perform in the real world.
-
-### Q3: Why is Feature Scaling necessary?
-> **Answer**: Features in this dataset have very different numerical scales. For example, CGPA ranges from 5.0 to 10.0, while IQ ranges from 80 to 140. Distance-based or gradient-descent algorithms (like Logistic Regression) might interpret the larger range of IQ as being 14 times more important than CGPA simply because of numerical magnitude. `StandardScaler` standardizes the features so they have a mean of 0 and a standard deviation of 1, placing all inputs on equal footing.
-
-### Q4: Explain the difference between Linear Regression and Logistic Regression.
-> **Answer**: Linear Regression is used for predicting continuous numeric values (like predicting a salary or house price) and outputs values from negative infinity to positive infinity. Logistic Regression is used for binary classification. It wraps the linear equation output in a **Sigmoid function**: $P = \frac{1}{1 + e^{-y}}$, which compresses any value into a range between 0 and 1. This output represents the probability of belonging to the positive class (e.g. 78% chance of being placed).
-
-### Q5: What is Overfitting and how did you prevent it?
-> **Answer**: Overfitting occurs when a model learns the training data (including random noise) too well, resulting in high training accuracy but poor testing accuracy. I prevented overfitting by:
-> 1. Limiting the depth of the Decision Tree model using `max_depth=5` so it didn't create excessively complex splits.
-> 2. Using ensemble algorithms like Random Forest that average out predictions from multiple trees to reduce variance.
-
-### Q6: Explain what Precision, Recall, and F1-Score mean in this context.
-> **Answer**:
-> - **Precision**: Out of all students predicted by the model to get placed, how many actually did? (High precision means fewer False Positives).
-> - **Recall**: Out of all students who actually got placed, how many did our model successfully find? (High recall means fewer False Negatives).
-> - **F1-Score**: The harmonic mean of Precision and Recall. We look at this to ensure a balanced, reliable model.
-
-### Q7: How did you deploy your model?
-> **Answer**: After training, I exported the best-trained model and scaler using `joblib` into serialized files (`best_model.pkl` and `scaler.pkl`). I then built an interactive web application using **Streamlit**. When a user adjusts parameters on the Streamlit dashboard, the app takes the inputs, applies the scaler, feeds it to the loaded model, and displays the placement prediction and probability instantly.
